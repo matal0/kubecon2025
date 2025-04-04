@@ -1,11 +1,168 @@
 # kubecon2025
 # Table of Contents
-1. [Day 1](#day 1)
-2. [Day 2](#day 2)
-3. [Day 3](#day 3)
-4. [Day 4](#day 4)
+1. [Day 1](#day-1)
+2. [Day 2](#day-2)
+3. [Day 3](#day-3)
+4. [Day 4](#day-4)
 
 ## Day 1
+### db on k8s
+Karen Jex crunshy data
+
+concerns:
+- team members having knowledge
+- things need to be done differently
+- lift and shift doesn't work
+- additional reassurance by business required
+
+hints:
+- don't need to be k8s 
+- consider managed platform
+- don't start all at once
+- start with a small project
+
+operators make use of custom resources
+crunchy pgo operator
+
+
+issues:
+handling extensions w/o recreating images
+software defined storage: scalable flexible effective
+
+EDB
+pillars of oss longevity
+DBs = #1 workload on k8s 2024
+build core tech
+develp ecosystem
+nurture practitioners
+address needs of enterprise
+
+how to build confidence?
+proven paths, oss growth & industry endorsement matters
+benchmakrks: proof reliability, scalability, performance compared to classic infra
+orgs don't want ship sensitivs data to third-party models
+
+not "why" but "when"
+AI and data sovereignty will define infra decisions
+dat control & compliance concerns will push more orgs toward on-prem or hybrid solutions
+N360 booth
+
+### alibaba cloud
+remote storage, orchestrating volumes for remote storage
+how to make storage accessible on AI platforms?
+goal: build AI platform
+.computing part and storage part
+.common approach: pv+csi (storage interf)+fuse (filesystem in user space)
+.issues: corars grained authoriz
+extra resiurce consumption on node but k8s is unaware of it
+dependency conflics fuse clients (e.g. libfuse)
+lack of diagnostic toolkit (e.g. permission denied)
+two fuse clients cannot bind IAM roles to same node
+=> run fuse lcient on hosts vs run fuse client in pod
+disconnection risks:
+oom 
+segmentation fault
+hotfix & upgrade w/o restart pod
+=> use operator with limitations
+=> fuse moderator, no session context
+
+
+common practise for data accessing?
+mount data source w/o restarting code space => data is immutable
+hig perf > extra cach layer
+fluid: dat orchestrator for cn data-intensive apps
+fluid controller product
+
+### PG extensions (percona)
+dynamic management of extensions
+importance: e.g. encryption, backup
+how to know OSS extensions will be maintained?
+=> pg ext networks: registry of extensions, pgxn.orgs
+others: pg_tle, tle, pgxman, postgres.pm
+
+ease of use on DoK
+classic installation vs containers
+
+problems statement: non-root, yum not available
+principles k8s: immutable image, read-only filesystem, prevent unauthorized change
+but some ext need to install librarires in shared dirs (CREATE EXTENSION)
+=> 1. rigid database image management. Issues: many images, complex version mgmnt, security
+=> 2. dynamic ext loading:
+from PG operators: EDB, stackgres, percona
+extension_control_path (pg 18)
+
+### VM on k8s
+convergence betw contianers and vm
+storags is crucial, sue, redhat portworx
+compare kubevirt with virt platforms:
+- already built-in container
+- k8s resources can now do infrastructure, unification of managing VMs
+- key criteria for kv: move vm to new platform, provide single platform,
+will require migration project (leave things behind)
+product , people, processes
+VM: storage, networking, backup solution (eco system)
+not liftshift, but refactor
+how to do streched DCs in kubevrt? requires stretched storage
+=> need to understand k8s before moving
+key challenges of kv:
+people need to understand why put effort in migrating the same (VM) thats is now a POD
+platform as a product, application team's requirements
+figure out what can move fast, reduce footprint => goal: stable platform
+is current storage automated, scale, standardized?
+need answer to: how to operate the storage platform
+
+future: adoption, everything (apps, dbs) moving into containers but not yet VMs
+decouple where from how
+
+design considerations
+tim darnell, portworx
+
+bare metal, network infra, storage
+KVM, CNI, CSI
+
+vSphere Cluster:k8s control pane
+HA: scheduler, eventual consistency
+DRS:taints, tolerations, descheduler
+vDS: NSX: openvswitch, ovn k8s, multus, cnis
+vsan, vvols, dpbm: portworx, k8s storage classes
+srm: k8s aware sync replication
+vmsc:k8s aware sync replication
+
+live migration & cloning (vMotion)
+IP changes of VM POD
+licensing based on IP
+app listeners on 0.0.0.0
+use ovn to maintian network identities
+
+MEM
+virtlauncher: pre-copy memory footprint, for most use cases
+other option: post-copy => no single source of truth
+auto converge:mem intensive wl, throttle CPU
+dedicated migration network
+limit number of migrations to prevent network overwhelm
+limit bandwidth fro migration
+
+Storage:
+VMs have persist storage, secondary disks (OS root, data volume)
+block copy within a bvc will be create second pvc, request block copy
+then spin up VM
+other: CSI clone of pvc (needs support by csi)
+
+guest customization: configmaps, secrets for customizatiom scripts
+
+templating:
+yaml, git
+
+data protection, DRS
+traditional storage replication don't work
+
+
+App strategies:
+skill gaps, operations complexit, data & storage mgmt., maturity
+LONXL
+
+portworx monthly hands-on labs
+
 ## Day 2
 ### keynote otel
 standardize data collection & analysis
