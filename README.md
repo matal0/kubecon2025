@@ -1,4 +1,141 @@
 # kubecon2025
+# Table of Contents
+1. [Day 1](#day 1)
+2. [Day 2](#day 2)
+3. [Day 3](#day 3)
+4. [Day 4](#day 4)
+
+## Day 1
+## Day 2
+### keynote otel
+standardize data collection & analysis
+perses: dashboard as code (alpha), enabling cn principles
+metrics, logs, traces
+otel operator:
+Instrumentation CRD
+- inject auto-instrumentation for java, go w/o code changes, java-options
+- Java libraries, frameworks, app servers (jetty, wildfly, websphere) and JVM (openJDK Eclipse Temurin) support otel
+- app Deployment:
+	annotations
+- prometheus backend to store data (receiver)
+- otel-collector ()
+
+### kcp: k8s-like control plane
+horizontally scalable control plan for k8s-like APIs
+open-source
+
+workspace structure: virt k8s cluster
+APIResourceSchema
+APIExport allow to access resourcesvia permissionClaims
+
+provider (pg) exports APIExport
+kcp as API gateway extends
+
+### DoK From DB mgmt to AI
+Gabriele Bartolini
+LLM: latency is important, local caching
+understanding change of using local storage
+pg_vector AI extension
+AI: data pre- & post-processing
+declarative configuration through operators (principle)
+simplify operational complexity
+kubernetes storage is important for PG, CSI driver
+scaling storage,
+trident
+AI strategies:
+-infrence (push out model)=large objects from object storage fetched
+-training
+block storage allows immutable
+AI requires fresh data, realtime data, event-driven processing (supply change analysis, anomaly detetion)
+orchestrating agents that reacto on events, realtime decision on hjow to react on event/which agent to spin up
+controlplane: package & group resources
+local SSD cheaper than memory
+isolate PG nodes from the rest, w/ optimized storage
+plan k8s setup for data workloads
+
+### sidecar debate
+why understand engineering tradeoffs instead of blindly jumping onto a new thing?
+linkerd
+sidecar: not an object until 2023, they are a pattern, container next to container
+run as long as app runs, shares cgroups, volumes
+example: log streaming, vault, opentelemetry
+nice way to add functionalily w/ chnaging app, like a library, owned by platform team
+clear operational & security model, treat them like an app
+service mesh: sidecar proxy handles traffic
+downside: side truck, upgrading sidecar means restarting pods, init container race condition
+job termination: sync between side and app
+resource usage
+two types that can have sidecars: initContainers, containers
+hack: container starts only after postStart hook has finished
+job: k8s doesn't know that side needs to stop as well
+fix:
+cont can have a type: sidecar and standard
+sidecars ar initcontainers, restartPolicy=Always, no longer block start of other cont (not event
+side always restart when app stop
+side init before app is guarantee
+side terminate after app
+sidecar termination is predtable now
+
+alternatives:
+1. side
+2. node proxies
+3. ambient 
+all use L7 proxies, where to put the proxy
+pod prox, node prox,
+ambient: L4only proxy on node, plus l7 functionality is at a shared tunable level
+sharing means multi-tenancy
+contended multitenancy
+L4 fairness handled by OS
+but L7 fairness is much harder, preemptive multitasking
+Envoy linkerd
+istio ambient
+
+### Power of init containers: reducing DB mgmt toil and yelp
+horizontal scaling, upgrades, restoring clusters from backup
+casssandra cluster (nosql, non-relational DB)
+initcontainers run sequentially, run to completion, no readiness/liveness probe
+node joins cluster:
+- seed and learn cluster topology
+- token ranges assigned
+- data stream to new node
+Change Data Capture mode, stored commit logs in CDC raw dir
+consumers read commit logs pusblish to kafka
+issue: CDC events will be generatd for bootstrap events when initializing new node
+
+solution: new pod schedule to a node during scale-up
+launch init container
+reduce voluntary disruption
+prepare for involuntary disruptions
+idempodent init container (e.g. check data on PV)
+start cassandra w/o CDC
+stop cassandra gracefully, exit init container
+start cassandra with CDC
+
+cassandra upgrades:
+two cluster status, joined: up & normal, down & normal
+roling updates failed earlier, 
+do one after the other: change ip, upgrades
+
+system table changes (Cassandra: SSTable): run nodetool upgradesstables required, but no control
+solution: check SSTable format in initContainer, etc.
+
+
+cluster recovery from backup:
+medusa copies cassandra to S3
+full or diff mode
+backup runs periodically per sidecar
+
+restore: deploy new casandra cluster, timestamp pitr yaml key
+
+takeaways for initContainers:
+idempotency
+minimize disruption (it's a process not an event), use PDB pod disr budget for eliminating disruption
+graceful exit of init container
+
+### github attestation of secure code
+build artefact,  deploy artefact, run artefact (github scubanjs/attestation-demo-py)
+build python packag, SBOM, attestation created (commit history, timespamp, build trigger)
+
 ## Day 3
 ### Starting & scaling platform teams
 book: platform engineering: a guide for technical, product, and people leaders (o'reilly 2024)
