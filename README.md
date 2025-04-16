@@ -19,7 +19,6 @@ How to build confidence in DoK?
 - consider that orgs don't want ship sensitivs data to third-party models
 
 
-
 <ins>Notes</ins><br>
 Karen Jex (crunchy data)
 
@@ -38,6 +37,14 @@ operators:
 - Crunchy pgo operator, EDB Cloud Native PostgreSQL
 - operators make use of custom resources
 - allow to handle operational tasks efficiently
+- Postgres Operators ease of mgmt. of db management
+Maturity seems to be very stable Crunchy Data and EDB
+How to provide confidence for DB on k8s
+confidence
+performance
+profen paths (best )
+reference implementation (bit installations)
+
 
 issues:
 - handling extensions w/o recreating images
