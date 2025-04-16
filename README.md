@@ -6,59 +6,66 @@
 4. [Day 4](#day-4)
 
 ## Day 1
-### db on k8s
-Karen Jex crunshy data
+### Data/DBs on k8s (DoK)
+
+#### Summary
+how to build confidence in DoK?
+- highlight proven paths, oss growth & industry endorsement matters
+- use benchmarks: proof reliability, scalability, performance compared to classic infra
+- consider that orgs don't want ship sensitivs data to third-party models
+
+not "why" but "when":
+- AI and data sovereignty will define infra decisions
+- data control & compliance concerns will push more orgs toward on-prem or hybrid solutions
+
+Notes:
+Karen Jex (crunchy data)
 
 concerns:
-- team members having knowledge
-- things need to be done differently
-- lift and shift doesn't work
-- additional reassurance by business required
+- OPS team members lacking DB knowledge, DBA lacking k8s knowledge
+- things need to be done differently (lift and shift doesn't work)
+- additional reassurance by business required for initial efforts
 
 hints:
-- don't need to be k8s 
-- consider managed platform
+- don't need to be on self-hosted k8s
+- consider managed DB platform
 - don't start all at once
 - start with a small project
 
-operators make use of custom resources
-crunchy pgo operator
-
+operators:
+- Crunchy pgo operator, EDB Cloud Native PostgreSQL
+- operators make use of custom resources
+- allow to handle operational tasks efficiently
 
 issues:
-handling extensions w/o recreating images
-software defined storage: scalable flexible effective
+- handling extensions w/o recreating images
+- software defined storage: scalable, flexible, effective
 
-EDB
+EDB:
 pillars of oss longevity
 DBs = #1 workload on k8s 2024
 build core tech
-develp ecosystem
+develop ecosystem
 nurture practitioners
 address needs of enterprise
 
-how to build confidence?
-proven paths, oss growth & industry endorsement matters
-benchmakrks: proof reliability, scalability, performance compared to classic infra
-orgs don't want ship sensitivs data to third-party models
-
-not "why" but "when"
-AI and data sovereignty will define infra decisions
-dat control & compliance concerns will push more orgs toward on-prem or hybrid solutions
-N360 booth
-
 ### alibaba cloud
-remote storage, orchestrating volumes for remote storage
+#### Summary
 how to make storage accessible on AI platforms?
-goal: build AI platform
-.computing part and storage part
+topics: fuse, remote storage, orchestrating volumes for remote storage
+goal: build AI platform using fluid
+The goal of Fluid is to enable AI/Big Data Applications to use data from any storage more efficiently with a high-level abstraction manner and without changes to the applications themselves.
+
+Details
+.FUSE is an interface that allows you to implement file systems in user space.
+.in AI there's a computing part and a storage part
 .common approach: pv+csi (storage interf)+fuse (filesystem in user space)
-.issues: corars grained authoriz
-extra resiurce consumption on node but k8s is unaware of it
+.issues: coars grained authorization
+extra resource consumption on node but k8s is unaware of it
 dependency conflics fuse clients (e.g. libfuse)
 lack of diagnostic toolkit (e.g. permission denied)
 two fuse clients cannot bind IAM roles to same node
-=> run fuse lcient on hosts vs run fuse client in pod
+=> run fuse client on hosts vs run fuse client in pod
 disconnection risks:
 oom 
 segmentation fault
@@ -66,14 +73,19 @@ hotfix & upgrade w/o restart pod
 => use operator with limitations
 => fuse moderator, no session context
 
-
 common practise for data accessing?
 mount data source w/o restarting code space => data is immutable
-hig perf > extra cach layer
-fluid: dat orchestrator for cn data-intensive apps
+hig perf > extra cache layer
+fluid: data orchestrator for cn data-intensive apps
 fluid controller product
 
 ### PG extensions (percona)
+#### Summary
+Different approaches of handling of PG extensions:
+- static image library
+- dynamic extension loading
+
+Details:
 dynamic management of extensions
 importance: e.g. encryption, backup
 how to know OSS extensions will be maintained?
@@ -92,7 +104,12 @@ from PG operators: EDB, stackgres, percona
 extension_control_path (pg 18)
 
 ### VM on k8s
-convergence betw contianers and vm
+#### Summary
+- kubevirt requires refactoring and migration project (leave things behind)
+- scope: Memory, Storage, HA, migration, design considerations
+
+Details:
+convergence betw containers and vm
 storags is crucial, sue, redhat portworx
 compare kubevirt with virt platforms:
 - already built-in container
@@ -155,7 +172,6 @@ yaml, git
 
 data protection, DRS
 traditional storage replication don't work
-
 
 App strategies:
 skill gaps, operations complexit, data & storage mgmt., maturity
