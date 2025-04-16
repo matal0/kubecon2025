@@ -203,7 +203,7 @@ Instrumentation CRD
 #### Summary
 Horizontally scalable control plane for k8s-like APIs.
 .Service providers export APIs.
-.kcp as API gateway extention
+.kcp as API gateway extension
 
 Details:
 open-source
@@ -326,7 +326,6 @@ do one after the other: change ip, upgrades
 system table changes (Cassandra: SSTable): run nodetool upgradesstables required, but no control
 solution: check SSTable format in initContainer, etc.
 
-
 cluster recovery from backup:
 medusa copies cassandra to S3
 full or diff mode
@@ -347,7 +346,9 @@ build python packag, SBOM, attestation created (commit history, timespamp, build
 ### Starting & scaling platform teams
 #### Summary
 when to start a platform team?
-which team skills?
+team skills: challenges are complexity, leverage, productivity
+PM: customer empathy skillset
+failures & lessons learned
 
 Details
 book: platform engineering: a guide for technical, product, and people leaders (o'reilly 2024)
@@ -357,7 +358,7 @@ team skills
 ![Alt text](images/pf_lifecycle.jpg?raw=true "Platform execution lifecycle")
   - challenge complexity: software engineering, w/o sft eng it's hard to handle cmplx
   - challenge leverage: operational ownership, supporting & operating components, build solid foundations, system skills/engineers
-  - challenge productivity: curated product approach, avloid cost-optimized offering devs don't like, focus on app teams
+  - challenge productivity: curated product approach, avoid cost-optimized offering devs don't like, focus on app teams
 
 scaling:
 platform product execution lifecycle
@@ -400,30 +401,42 @@ no immediate demand, future platform language
 
 reset#4: product thinking
 plan:  whats useful for product teams in 12 months
-reality: sucess, took longer nbut social proof of immediate business valu ebraouhgt patience
+reality: success, took longer nbut social proof of immediate business valu ebraouhgt patience
 listen to cust requirements not their solutions
 
 ### Live migration of database fleet
+#### Summary
+problem of statefulsets: 
+autoscaling requires pod eviction, resubmit pod
+=> add capacity first, then take away old one
+
+Details:
 clickhouse: oltp OSS DB
-PVC holding metadata, data is in objstorage
+PVC holding metadata, data is in obj storage
 problem of statefulsets: 
 autoscaling requires pod eviction, resubmit pod
 break first vertical sclaing: slow, puts pressure on remaining
-=> make befor break (MBB):
+=> make before break (MBB):
 add capacity first, then take away old one
 
 requires multi-statefulSet:
 Temporal: batch handling
 
 ### OPA Gatekeeper for FinOPS
-policies as code, cost management
+#### Summary
+policies as code, e.g. for cost management
 
+Details:
 traditional use cases:
 secret management, complance validation, network policies
 finops use cases:
 tagging compliance, compute optimization, namespace cost allocation, storage cost optimization
 
 ### On-premise k8s Saxo Bank:
+#### Summary
+Success story of containerization in a Banking environment
+
+Details:
 motivation to exit cloud: compliance, reliability, cost
 cluster & node creation speed
 security benchmarking improvement
@@ -446,7 +459,12 @@ replace minio with rook (due to apache license vs agpl-3.0 of minio)
 crossplane for user and bucket management
 bank vault seems outdated, replaced by sealedsecrets
 
-### Canary deployments and feature flags:
+### Canary deployments and feature flags
+#### Summary
+usage of canary deployments
+OpenFeature to create segments of users based on location, team, usage history, env, etc
+
+Details:
 canary deployments
 separate deployment of new code from release functionality
 challenges: deployment during maintenance window
@@ -470,6 +488,10 @@ opt-in for early-adapters, then 33% then all others
 pause rollout when issue occurs
 
 ### SIG storage:
+#### Summary
+New fetures on kubernetes storage handling
+
+Details:
 what do we do: PVC and PV, storage classes, CSI, volumes etc
 CSI drivers ar owned by SIG Cloud Providers
 
@@ -502,7 +524,11 @@ DataSource only local objects, *Ref any namespace (cross NS transfer)
 
 features in design/prototyping
 
-### image snapshotters CERN:
+### image snapshotters CERN
+#### Summary
+lazy pulling of layers
+
+Details:
 CernVM filesystem
 40Mio events per sec 24/7
 containers allow to preserver workloads over decades
