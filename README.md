@@ -181,6 +181,12 @@ portworx monthly hands-on labs
 
 ## Day 2
 ### keynote otel
+#### Sumary
+OTEL Goal: standardize data collection & analysis
+Scope: metrics, logs, traces
+Topics: otel operator, perses (dashboards as code)
+
+Details:
 standardize data collection & analysis
 perses: dashboard as code (alpha), enabling cn principles
 metrics, logs, traces
@@ -194,7 +200,12 @@ Instrumentation CRD
 - otel-collector ()
 
 ### kcp: k8s-like control plane
-horizontally scalable control plan for k8s-like APIs
+#### Summary
+Horizontally scalable control plane for k8s-like APIs.
+.Service providers export APIs.
+.kcp as API gateway extention
+
+Details:
 open-source
 
 workspace structure: virt k8s cluster
@@ -205,6 +216,13 @@ provider (pg) exports APIExport
 kcp as API gateway extends
 
 ### DoK From DB mgmt to AI
+#### Summary
+- requirements of AI & DBMS in terms of data
+- AI: data pre- & post-processing, training & infrence
+- plan k8s setup for data workloads
+- isolate PG nodes from the rest, w/ optimized storage
+
+Details:
 Gabriele Bartolini
 LLM: latency is important, local caching
 understanding change of using local storage
@@ -220,13 +238,20 @@ AI strategies:
 -training
 block storage allows immutable
 AI requires fresh data, realtime data, event-driven processing (supply change analysis, anomaly detetion)
-orchestrating agents that reacto on events, realtime decision on hjow to react on event/which agent to spin up
+orchestrating agents that react on events, realtime decision on how to react on event/which agent to spin up
 controlplane: package & group resources
 local SSD cheaper than memory
 isolate PG nodes from the rest, w/ optimized storage
 plan k8s setup for data workloads
 
 ### sidecar debate
+#### Summry
+- sidecar: not an object until 2023
+- nice way to add functionalily w/o changing app
+- example: service mesh, idecar proxy handles traffic
+- sidecar termination is predictable now
+
+Details:
 why understand engineering tradeoffs instead of blindly jumping onto a new thing?
 linkerd
 sidecar: not an object until 2023, they are a pattern, container next to container
@@ -247,7 +272,7 @@ sidecars ar initcontainers, restartPolicy=Always, no longer block start of other
 side always restart when app stop
 side init before app is guarantee
 side terminate after app
-sidecar termination is predtable now
+sidecar termination is predictable now
 
 alternatives:
 1. side
@@ -264,6 +289,15 @@ Envoy linkerd
 istio ambient
 
 ### Power of init containers: reducing DB mgmt toil and yelp
+#### Summary
+Using init containers for: horizontal scaling, upgrades, restoring clusters from backup
+Example: Cassandra DB cluster upgrades
+takeaways init containers:
+- ensure idempotency
+- minimize disruption (it's a process not an event), use PDB pod disr budget for eliminating disruption
+- graceful exit of init container
+
+Details:
 horizontal scaling, upgrades, restoring clusters from backup
 casssandra cluster (nosql, non-relational DB)
 initcontainers run sequentially, run to completion, no readiness/liveness probe
@@ -286,7 +320,7 @@ start cassandra with CDC
 
 cassandra upgrades:
 two cluster status, joined: up & normal, down & normal
-roling updates failed earlier, 
+rolling updates failed earlier, 
 do one after the other: change ip, upgrades
 
 system table changes (Cassandra: SSTable): run nodetool upgradesstables required, but no control
@@ -311,6 +345,11 @@ build python packag, SBOM, attestation created (commit history, timespamp, build
 
 ## Day 3
 ### Starting & scaling platform teams
+#### Summary
+when to start a platform team?
+which team skills?
+
+Details
 book: platform engineering: a guide for technical, product, and people leaders (o'reilly 2024)
 
 when to start?
