@@ -9,16 +9,18 @@
 ### Data/DBs on k8s (DoK)
 
 #### Summary
-how to build confidence in DoK?
+DoK is not about "why?" but "when?".
+- AI and data sovereignty will define infra decisions
+- data control & compliance concerns will push more orgs toward on-prem or hybrid solutions
+  
+How to build confidence in DoK?
 - highlight proven paths, oss growth & industry endorsement matters
 - use benchmarks: proof reliability, scalability, performance compared to classic infra
 - consider that orgs don't want ship sensitivs data to third-party models
 
-not "why" but "when":
-- AI and data sovereignty will define infra decisions
-- data control & compliance concerns will push more orgs toward on-prem or hybrid solutions
 
-Notes:
+
+<ins>Notes</ins><br>
 Karen Jex (crunchy data)
 
 concerns:
@@ -51,12 +53,13 @@ address needs of enterprise
 
 ### alibaba cloud
 #### Summary
-how to make storage accessible on AI platforms?
+How to make storage accessible for AI platforms?
 topics: fuse, remote storage, orchestrating volumes for remote storage
-goal: build AI platform using fluid
+goal: build AI platform using Fluid
 The goal of Fluid is to enable AI/Big Data Applications to use data from any storage more efficiently with a high-level abstraction manner and without changes to the applications themselves.
 
-Details
+<ins>Notes</ins><br>
+
 .FUSE is an interface that allows you to implement file systems in user space.
 .in AI there's a computing part and a storage part
 .common approach: pv+csi (storage interf)+fuse (filesystem in user space)
@@ -85,7 +88,8 @@ Different approaches of handling of PG extensions:
 - static image library
 - dynamic extension loading
 
-Details:
+<ins>Notes</ins><br>
+
 dynamic management of extensions
 importance: e.g. encryption, backup
 how to know OSS extensions will be maintained?
@@ -108,7 +112,7 @@ extension_control_path (pg 18)
 - kubevirt requires refactoring and migration project (leave things behind)
 - scope: Memory, Storage, HA, migration, design considerations
 
-Details:
+<ins>Notes</ins><br>
 convergence betw containers and vm
 storags is crucial, sue, redhat portworx
 compare kubevirt with virt platforms:
@@ -186,7 +190,7 @@ OTEL Goal: standardize data collection & analysis
 Scope: metrics, logs, traces
 Topics: otel operator, perses (dashboards as code)
 
-Details:
+<ins>Notes</ins><br>
 standardize data collection & analysis
 perses: dashboard as code (alpha), enabling cn principles
 metrics, logs, traces
@@ -205,9 +209,7 @@ Horizontally scalable control plane for k8s-like APIs.
 .Service providers export APIs.
 .kcp as API gateway extension
 
-Details:
-open-source
-
+<ins>Notes</ins><br>
 workspace structure: virt k8s cluster
 APIResourceSchema
 APIExport allow to access resourcesvia permissionClaims
@@ -222,8 +224,8 @@ kcp as API gateway extends
 - plan k8s setup for data workloads
 - isolate PG nodes from the rest, w/ optimized storage
 
-Details:
-Gabriele Bartolini
+<ins>Notes</ins><br>
+Gabriele Bartolini (EDB)
 LLM: latency is important, local caching
 understanding change of using local storage
 pg_vector AI extension
@@ -251,7 +253,7 @@ plan k8s setup for data workloads
 - example: service mesh, idecar proxy handles traffic
 - sidecar termination is predictable now
 
-Details:
+<ins>Notes</ins><br>
 why understand engineering tradeoffs instead of blindly jumping onto a new thing?
 linkerd
 sidecar: not an object until 2023, they are a pattern, container next to container
@@ -297,7 +299,7 @@ takeaways init containers:
 - minimize disruption (it's a process not an event), use PDB pod disr budget for eliminating disruption
 - graceful exit of init container
 
-Details:
+<ins>Notes</ins><br>
 horizontal scaling, upgrades, restoring clusters from backup
 casssandra cluster (nosql, non-relational DB)
 initcontainers run sequentially, run to completion, no readiness/liveness probe
@@ -350,7 +352,7 @@ team skills: challenges are complexity, leverage, productivity
 PM: customer empathy skillset
 failures & lessons learned
 
-Details
+<ins>Notes</ins><br>
 book: platform engineering: a guide for technical, product, and people leaders (o'reilly 2024)
 
 when to start?
@@ -410,7 +412,7 @@ problem of statefulsets:
 autoscaling requires pod eviction, resubmit pod
 => add capacity first, then take away old one
 
-Details:
+<ins>Notes</ins><br>
 clickhouse: oltp OSS DB
 PVC holding metadata, data is in obj storage
 problem of statefulsets: 
@@ -426,7 +428,7 @@ Temporal: batch handling
 #### Summary
 policies as code, e.g. for cost management
 
-Details:
+<ins>Notes</ins><br>
 traditional use cases:
 secret management, complance validation, network policies
 finops use cases:
@@ -436,7 +438,7 @@ tagging compliance, compute optimization, namespace cost allocation, storage cos
 #### Summary
 Success story of containerization in a Banking environment
 
-Details:
+<ins>Notes</ins><br>
 motivation to exit cloud: compliance, reliability, cost
 cluster & node creation speed
 security benchmarking improvement
@@ -464,7 +466,7 @@ bank vault seems outdated, replaced by sealedsecrets
 usage of canary deployments
 OpenFeature to create segments of users based on location, team, usage history, env, etc
 
-Details:
+<ins>Notes</ins><br>
 canary deployments
 separate deployment of new code from release functionality
 challenges: deployment during maintenance window
@@ -491,7 +493,7 @@ pause rollout when issue occurs
 #### Summary
 New fetures on kubernetes storage handling
 
-Details:
+<ins>Notes</ins><br>
 what do we do: PVC and PV, storage classes, CSI, volumes etc
 CSI drivers ar owned by SIG Cloud Providers
 
@@ -526,9 +528,9 @@ features in design/prototyping
 
 ### image snapshotters CERN
 #### Summary
-lazy pulling of layers
+lazy pulling of layers at CERN
 
-Details:
+<ins>Notes</ins><br>
 CernVM filesystem
 40Mio events per sec 24/7
 containers allow to preserver workloads over decades
@@ -559,6 +561,7 @@ unpack images by layers
 - XRD is an API object w/ spec, status etc.
 - controllers reconcile XRDs (e.g. S3 controller)
 
+<ins>Notes</ins><br>
 goal: build your own platform API
 - define a schema/abstraction 
 - define composite resource definition (XRD)
