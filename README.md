@@ -233,25 +233,25 @@ kcp as API gateway extends
 
 <ins>Notes</ins><br>
 Gabriele Bartolini (EDB)
-LLM: latency is important, local caching
-understanding change of using local storage
-pg_vector AI extension
-AI: data pre- & post-processing
-declarative configuration through operators (principle)
-simplify operational complexity
-kubernetes storage is important for PG, CSI driver
-scaling storage,
-trident
+
+- LLM: latency is important, local caching
+- understanding change of using local storage
+- pg_vector AI extension
+- AI: data pre- & post-processing
+- declarative configuration through operators (principle)
+- simplify operational complexity
+- kubernetes storage is important for PG, CSI driver
+- scaling storage, trident
 AI strategies:
--infrence (push out model)=large objects from object storage fetched
--training
-block storage allows immutable
-AI requires fresh data, realtime data, event-driven processing (supply change analysis, anomaly detetion)
-orchestrating agents that react on events, realtime decision on how to react on event/which agent to spin up
-controlplane: package & group resources
-local SSD cheaper than memory
-isolate PG nodes from the rest, w/ optimized storage
-plan k8s setup for data workloads
+- infrence (push out model)=large objects from object storage fetched
+- training
+- block storage allows immutable
+- AI requires fresh data, realtime data, event-driven processing (supply change analysis, anomaly detetion)
+- orchestrating agents that react on events, realtime decision on how to react on event/which agent to spin up
+- controlplane: package & group resources
+- local SSD cheaper than memory
+- isolate PG nodes from the rest, w/ optimized storage
+- plan k8s setup for data workloads
 
 ### sidecar debate
 #### Summry
